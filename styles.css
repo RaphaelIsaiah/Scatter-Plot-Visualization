@@ -1,0 +1,40 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ebebe8;
+  text-align: center;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: clamp(1.4rem, 5vw, 1.6rem);
+}
+
+#chart-container {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+#tooltip {
+  position: absolute;
+  text-align: center;
+  padding: 5px;
+  font-size: 12px;
+  background: lightsteelblue;
+  border: 1px solid #333;
+  border-radius: 5px;
+  pointer-events: none;
+  opacity: 0;
+}
