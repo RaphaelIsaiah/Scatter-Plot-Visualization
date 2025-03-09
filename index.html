@@ -8,10 +8,13 @@
     <script src="https://d3js.org/d3.v6.min.js"></script>
   </head>
   <body>
-    <div id="chart-container">
+    <div id="container">
       <h1 id="title">Scatter Plot Visualization</h1>
-
-      <div id="legend"></div>
+      <div id="chart-container"></div>
+      <div id="legend" class="guide">
+        <p>No doping allegations (<span class="green">green</span>)</p>
+        <p>Riders with doping allegations (<span class="red">red</span>)</p>
+      </div>
     </div>
 
     <script src="script.js"></script>

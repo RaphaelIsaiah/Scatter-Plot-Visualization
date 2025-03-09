@@ -59,10 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .range([height - padding, padding]);
 
     // Axes
-    const xAxis = d3
-      .axisBottom(xScale)
-      .ticks(4)
-      .tickFormat(d3.format("d")); // Format as year only
+    const xAxis = d3.axisBottom(xScale).ticks(4).tickFormat(d3.format("d")); // Format as year only
 
     const yAxis = d3.axisLeft(yScale).tickFormat(d3.timeFormat("%M:%S")); // Format as minutes:seconds
 
@@ -87,11 +84,25 @@ document.addEventListener("DOMContentLoaded", function () {
       .attr("class", "dot")
       .attr("cx", (d) => xScale(d.Year))
       .attr("cy", (d) => yScale(new Date(d.Seconds * 1000)))
-      .attr("r", 5)
+      .attr("r", 4)
       .attr("data-xvalue", (d) => d.Year)
       .attr("data-yvalue", (d) => new Date(d.Seconds * 1000))
       .attr("fill", (d) => (d.Doping ? "red" : "green"))
       .on("mouseover", function (e, d) {
+        const tooltipWidth = tooltip.node().offsetWidth;
+        const tooltipHeight = tooltip.node().offsetHeight;
+
+        let left = e.pageX + 10;
+        let top = e.pageY - 40;
+
+        // Prevent tooltip overflow
+        if (left + tooltipWidth > window.innerWidth) {
+          left = e.pageX - tooltipWidth - 10;
+        }
+        if (top < 0) {
+          top = e.pageY + 10;
+        }
+
         tooltip
           .attr("data-year", d.Year)
           .style("opacity", 1)
@@ -100,58 +111,11 @@ document.addEventListener("DOMContentLoaded", function () {
               d.Doping ? d.Doping : "No Doping Allegations"
             }`
           )
-          .style("left", `${e.pageX + 10}px`)
-          .style("top", `${e.pageY - 40}px`);
+          .style("left", `${left}px`)
+          .style("top", `${top}px`);
       })
       .on("mouseout", function () {
         tooltip.style("opacity", 0);
       });
-
-    // Legend
-    const legend = svg
-      .append("g")
-      .attr("id", "legend")
-      .attr("transform", `translate(${width - padding}, ${padding})`);
-
-    // legend
-    //   .append("rect")
-    //   .attr("x", -70)
-    //   .attr("y", 200)
-    //   .attr("width", 150)
-    //   .attr("height", 70)
-    //   .style("fill", "none")
-    //   .style("stroke", "#000");
-
-    legend
-      .append("rect")
-      .attr("x", -10)
-      .attr("y", 200)
-      .attr("width", 20)
-      .attr("height", 20)
-      .style("fill", "green");
-
-    legend
-      .append("text")
-      .attr("x", -150)
-      .attr("y", 215)
-      .text("No Doping Allegations")
-      .style("font-size", "10px")
-
-
-    legend
-    .append("rect")
-    .attr("x", -10)
-    .attr("y", 235)
-    .attr("width", 20)
-    .attr("height", 20)
-    .style("fill", "red");
-
-    legend
-      .append("text")
-      .attr("x", -150)
-      .attr("y", 250)
-      .text("Riders with Doping Allegations")
-      .style("font-size", "10px")
-
   }
 });
